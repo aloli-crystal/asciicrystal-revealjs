@@ -23,17 +23,17 @@ describe AsciicrystalRevealjs::Converter do
   describe "standalone document" do
     it "generates a complete HTML document with reveal.js scripts" do
       input = <<-ADOC
-      = My Presentation
-      Author Name
+        = My Presentation
+        Author Name
 
-      == Slide 1
+        == Slide 1
 
-      Hello World
+        Hello World
 
-      == Slide 2
+        == Slide 2
 
-      Goodbye World
-      ADOC
+        Goodbye World
+        ADOC
 
       html = convert(input)
       html.should contain("<!DOCTYPE html>")
@@ -57,13 +57,13 @@ describe AsciicrystalRevealjs::Converter do
 
     it "uses the configured theme" do
       input = <<-ADOC
-      = Test
-      :revealjs_theme: moon
+        = Test
+        :revealjs_theme: moon
 
-      == Slide
+        == Slide
 
-      Content
-      ADOC
+        Content
+        ADOC
 
       html = convert(input)
       html.should contain("moon.css")
@@ -71,13 +71,13 @@ describe AsciicrystalRevealjs::Converter do
 
     it "uses a custom theme URL" do
       input = <<-ADOC
-      = Test
-      :revealjs_customtheme: https://example.com/mytheme.css
+        = Test
+        :revealjs_customtheme: https://example.com/mytheme.css
 
-      == Slide
+        == Slide
 
-      Content
-      ADOC
+        Content
+        ADOC
 
       html = convert(input)
       html.should contain("https://example.com/mytheme.css")
@@ -87,13 +87,13 @@ describe AsciicrystalRevealjs::Converter do
 
     it "respects transition setting" do
       input = <<-ADOC
-      = Test
-      :revealjs_transition: fade
+        = Test
+        :revealjs_transition: fade
 
-      == Slide
+        == Slide
 
-      Content
-      ADOC
+        Content
+        ADOC
 
       html = convert(input)
       html.should contain("transition: 'fade'")
@@ -101,14 +101,14 @@ describe AsciicrystalRevealjs::Converter do
 
     it "respects width and height settings" do
       input = <<-ADOC
-      = Test
-      :revealjs_width: 1920
-      :revealjs_height: 1080
+        = Test
+        :revealjs_width: 1920
+        :revealjs_height: 1080
 
-      == Slide
+        == Slide
 
-      Content
-      ADOC
+        Content
+        ADOC
 
       html = convert(input)
       html.should contain("width: 1920")
@@ -117,14 +117,14 @@ describe AsciicrystalRevealjs::Converter do
 
     it "respects controls and progress settings" do
       input = <<-ADOC
-      = Test
-      :revealjs_controls: false
-      :revealjs_progress: false
+        = Test
+        :revealjs_controls: false
+        :revealjs_progress: false
 
-      == Slide
+        == Slide
 
-      Content
-      ADOC
+        Content
+        ADOC
 
       html = convert(input)
       html.should contain("controls: false")
@@ -141,13 +141,13 @@ describe AsciicrystalRevealjs::Converter do
 
     it "includes author on title slide" do
       input = <<-ADOC
-      = My Presentation
-      John Doe
+        = My Presentation
+        John Doe
 
-      == Slide
+        == Slide
 
-      Content
-      ADOC
+        Content
+        ADOC
 
       html = convert_embedded(input)
       html.should contain("John Doe")
@@ -157,16 +157,16 @@ describe AsciicrystalRevealjs::Converter do
   describe "sections as slides" do
     it "converts level-1 sections to horizontal slides" do
       input = <<-ADOC
-      = Presentation
+        = Presentation
 
-      == Slide A
+        == Slide A
 
-      Content A
+        Content A
 
-      == Slide B
+        == Slide B
 
-      Content B
-      ADOC
+        Content B
+        ADOC
 
       html = convert_embedded(input)
       html.should contain("<section")
@@ -176,20 +176,20 @@ describe AsciicrystalRevealjs::Converter do
 
     it "converts level-2 sections to vertical slides within a horizontal group" do
       input = <<-ADOC
-      = Presentation
+        = Presentation
 
-      == Horizontal Slide
+        == Horizontal Slide
 
-      Main content
+        Main content
 
-      === Vertical Slide 1
+        === Vertical Slide 1
 
-      Sub content 1
+        Sub content 1
 
-      === Vertical Slide 2
+        === Vertical Slide 2
 
-      Sub content 2
-      ADOC
+        Sub content 2
+        ADOC
 
       html = convert_embedded(input)
       # The outer section wraps the horizontal + verticals
@@ -203,17 +203,17 @@ describe AsciicrystalRevealjs::Converter do
   describe "speaker notes" do
     it "converts [.notes] open block to <aside class='notes'>" do
       input = <<-ADOC
-      = Test
+        = Test
 
-      == Slide
+        == Slide
 
-      Visible content
+        Visible content
 
-      [.notes]
-      --
-      These are speaker notes
-      --
-      ADOC
+        [.notes]
+        --
+        These are speaker notes
+        --
+        ADOC
 
       html = convert_embedded(input)
       html.should contain(%(<aside class="notes">))
@@ -223,13 +223,13 @@ describe AsciicrystalRevealjs::Converter do
   describe "fragments" do
     it "applies fragment class for [%step] option" do
       input = <<-ADOC
-      = Test
+        = Test
 
-      == Slide
+        == Slide
 
-      [%step]
-      Content that appears incrementally
-      ADOC
+        [%step]
+        Content that appears incrementally
+        ADOC
 
       html = convert_embedded(input)
       html.should contain(%(class="fragment"))
@@ -239,13 +239,13 @@ describe AsciicrystalRevealjs::Converter do
   describe "background attributes" do
     it "converts background-image to data-background-image" do
       input = <<-ADOC
-      = Test
+        = Test
 
-      [background-image="sky.jpg"]
-      == Slide
+        [background-image="sky.jpg"]
+        == Slide
 
-      Content
-      ADOC
+        Content
+        ADOC
 
       html = convert_embedded(input)
       html.should contain(%(data-background-image="sky.jpg"))
@@ -260,14 +260,14 @@ describe AsciicrystalRevealjs::Converter do
 
     it "converts unordered lists" do
       input = <<-ADOC
-      = Test
+        = Test
 
-      == Slide
+        == Slide
 
-      * Item 1
-      * Item 2
-      * Item 3
-      ADOC
+        * Item 1
+        * Item 2
+        * Item 3
+        ADOC
 
       html = convert_embedded(input)
       html.should contain("<ul")
@@ -276,14 +276,14 @@ describe AsciicrystalRevealjs::Converter do
 
     it "converts ordered lists" do
       input = <<-ADOC
-      = Test
+        = Test
 
-      == Slide
+        == Slide
 
-      . First
-      . Second
-      . Third
-      ADOC
+        . First
+        . Second
+        . Third
+        ADOC
 
       html = convert_embedded(input)
       html.should contain("<ol")
@@ -292,15 +292,15 @@ describe AsciicrystalRevealjs::Converter do
 
     it "converts source code blocks" do
       input = <<-ADOC
-      = Test
+        = Test
 
-      == Slide
+        == Slide
 
-      [source,python]
-      ----
-      print("Hello")
-      ----
-      ADOC
+        [source,python]
+        ----
+        print("Hello")
+        ----
+        ADOC
 
       html = convert_embedded(input)
       html.should contain("<pre")
@@ -311,17 +311,17 @@ describe AsciicrystalRevealjs::Converter do
 
     it "converts tables" do
       input = <<-ADOC
-      = Test
+        = Test
 
-      == Slide
+        == Slide
 
-      |===
-      | Header 1 | Header 2
+        |===
+        | Header 1 | Header 2
 
-      | Cell 1
-      | Cell 2
-      |===
-      ADOC
+        | Cell 1
+        | Cell 2
+        |===
+        ADOC
 
       html = convert_embedded(input)
       html.should contain("<table")
@@ -329,12 +329,12 @@ describe AsciicrystalRevealjs::Converter do
 
     it "converts images" do
       input = <<-ADOC
-      = Test
+        = Test
 
-      == Slide
+        == Slide
 
-      image::photo.png[A photo]
-      ADOC
+        image::photo.png[A photo]
+        ADOC
 
       html = convert_embedded(input)
       html.should contain("<img")
@@ -343,15 +343,15 @@ describe AsciicrystalRevealjs::Converter do
 
     it "converts blockquotes" do
       input = <<-ADOC
-      = Test
+        = Test
 
-      == Slide
+        == Slide
 
-      [quote, Albert Einstein]
-      ____
-      Imagination is more important than knowledge.
-      ____
-      ADOC
+        [quote, Albert Einstein]
+        ____
+        Imagination is more important than knowledge.
+        ____
+        ADOC
 
       html = convert_embedded(input)
       html.should contain("<blockquote")
@@ -360,12 +360,12 @@ describe AsciicrystalRevealjs::Converter do
 
     it "converts inline formatting" do
       input = <<-ADOC
-      = Test
+        = Test
 
-      == Slide
+        == Slide
 
-      This has *bold* and _italic_ text.
-      ADOC
+        This has *bold* and _italic_ text.
+        ADOC
 
       html = convert_embedded(input)
       html.should contain("<strong>bold</strong>")
@@ -375,7 +375,7 @@ describe AsciicrystalRevealjs::Converter do
 
   describe "version" do
     it "has correct version" do
-      AsciicrystalRevealjs::VERSION.should eq("5.2.0.5")
+      AsciicrystalRevealjs::VERSION.should eq("5.2.0.6")
     end
   end
 end

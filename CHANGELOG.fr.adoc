@@ -3,6 +3,10 @@
 :toc-title: Versions
 :toclevels: 2
 
+== v5.2.0.6 — 2026-10-16
+
+* ameba 1.7 et Crystal 1.22.0 en CI ; nouvelles règles appliquées, aucun changement de comportement.
+
 == v5.2.0.5 — 2026-07-29
 
 * Renommage du dossier source interne `src/asciidoctor_revealjs/` → `src/asciicrystal_revealjs/` (chemin interne ; aucun changement d'API). Provenance du gem Ruby conservée.
