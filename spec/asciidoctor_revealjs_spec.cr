@@ -1,4 +1,5 @@
 require "./spec_helper"
+require "yaml"
 
 # Helper to load and convert an AsciiDoc source string using the revealjs converter.
 private def convert(source : String, standalone : Bool = true) : String
@@ -375,7 +376,8 @@ describe AsciicrystalRevealjs::Converter do
 
   describe "version" do
     it "has correct version" do
-      AsciicrystalRevealjs::VERSION.should eq("5.2.0.6")
+      yml = YAML.parse(File.read(File.join(__DIR__, "..", "shard.yml")))
+      AsciicrystalRevealjs::VERSION.should eq(yml["version"].as_s)
     end
   end
 end
